@@ -8,7 +8,11 @@ scalaVersion := "2.11.1"
 
 libraryDependencies ++= Seq(
   jdbc,
-  anorm,
   cache,
   ws
+)
+
+libraryDependencies ++= Seq(
+  "com.typesafe.slick" %% "slick" % "2.1.0",
+  "org.slf4j" % "slf4j-nop" % "1.6.4"
 )
