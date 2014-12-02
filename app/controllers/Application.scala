@@ -26,19 +26,18 @@ object Application extends Controller {
   def addBar = Action { implicit request =>
     barForm.bindFromRequest.value map { bar =>
       inTransaction(AppDB.barTable insert bar)
-      Redirect(routes.Application.index())
+      Redirect(routes.Application.getBars())
     } getOrElse BadRequest
   }
 
   def getBars = Action {
-    /*val json = inTransaction {
+    val bars = inTransaction {
       val bars = from(AppDB.barTable)(barTable =>
         select(barTable)
       )
-      bars.toJson
+      bars.toList
     }
-    Ok(json).as(JSON)*/
-    Ok("Ololo")
+    Ok(views.html.bars(bars))
   }
 
 }
