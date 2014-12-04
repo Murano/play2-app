@@ -1,8 +1,11 @@
 package controllers
 
+
+import com.codahale.jerkson.Json
 import play.api.mvc._
-import spray.json._
-import DefaultJsonProtocol._
+/*import spray.json._
+import DefaultJsonProtocol._*/
+
 
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text, optional}
@@ -35,7 +38,8 @@ object Application extends Controller {
       val bars = from(AppDB.barTable)(barTable =>
         select(barTable)
       )
-      bars.toList
+
+      Json.generate(bars)
     }
     Ok(views.html.bars(bars))
   }
