@@ -1,9 +1,7 @@
-@(bars: String)
+@(bars: List[models.Bar])
 
-@*
 <ul>
     @for(bar <- bars) {
         <li>@bar.id == @bar.name</li>
     }
-</ul>*@
-@bars
+</ul>

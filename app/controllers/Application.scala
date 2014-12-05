@@ -1,10 +1,13 @@
 package controllers
 
 
-import com.codahale.jerkson.Json
+//import com.codahale.jerkson.Json
 import play.api.mvc._
-/*import spray.json._
-import DefaultJsonProtocol._*/
+
+import play.api.libs.json.Json
+
+//import DefaultJsonProtocol._
+//import com.google.gson.Gson
 
 
 import play.api.data.Form
@@ -34,14 +37,27 @@ object Application extends Controller {
   }
 
   def getBars = Action {
+    implicit val barWrites = Json.writes[Bar]
     val bars = inTransaction {
       val bars = from(AppDB.barTable)(barTable =>
         select(barTable)
       )
 
-      Json.generate(bars)
+      bars.toList
     }
     Ok(views.html.bars(bars))
+  }
+
+  def getBarsJson = Action {
+    implicit val barWrites = Json.writes[Bar]
+    val bars = inTransaction {
+      val bars = from(AppDB.barTable)(barTable =>
+        select(barTable)
+      )
+
+      Json.toJson(bars)
+    }
+    Ok(bars)
   }
 
 }
